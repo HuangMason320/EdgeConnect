@@ -12,8 +12,8 @@ from src.edge_connect import EdgeConnect
 def main(mode=None):
     r"""starts the model
 
-    Args:
-        mode (int): 1: train, 2: test, 3: eval, reads from config file if not specified
+    dArgs:
+        moe (int): 1: train, 2: test, 3: eval, reads from config file if not specified
     """
 
     config = load_config(mode)
@@ -25,24 +25,21 @@ def main(mode=None):
 
     # init device
     if torch.cuda.is_available():
+        print("Using CUDA")
         config.DEVICE = torch.device("cuda")
         torch.backends.cudnn.benchmark = True   # cudnn auto-tuner
     else:
+        print("Using CPU")
         config.DEVICE = torch.device("cpu")
-
-
 
     # set cv2 running threads to 1 (prevents deadlocks with pytorch dataloader)
     cv2.setNumThreads(0)
-
 
     # initialize random seed
     torch.manual_seed(config.SEED)
     torch.cuda.manual_seed_all(config.SEED)
     np.random.seed(config.SEED)
     random.seed(config.SEED)
-
-
 
     # build the model and initialize
     model = EdgeConnect(config)

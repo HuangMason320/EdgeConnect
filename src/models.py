@@ -96,6 +96,7 @@ class EdgeModel(BaseModel):
             self.add_module('generator', self.generator)
         
         discriminator = Discriminator(in_channels=2, use_sigmoid=config.GAN_LOSS != 'hinge')
+        
         if len(config.GPU) > 1:
             discriminator = nn.DataParallel(discriminator, config.GPU)
         self.discriminator = discriminator
