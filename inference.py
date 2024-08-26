@@ -11,7 +11,7 @@ from skimage.color import rgb2gray, gray2rgb
 from skimage.feature import canny
 import torch
 
-EDGE_MODEL_FILE_PATH = 'test_model/models_720.nef'
+EDGE_MODEL_FILE_PATH = 'TestModel/models_720.nef'
 INPAINTING_MODEL_FILE_PATH = 'InpaintModel/models_720.nef'
 IMAGE_FILE_PATH = 'examples/places2/images/places2_01.png'
 MASK_FILE_PATH = 'examples/places2/masks/places2_01.png'
@@ -28,21 +28,21 @@ def get_device_usb_speed_by_port_id(usb_port_id: int) -> kp.UsbSpeed:
 
     raise IOError('Specified USB port ID {} not exist.'.format(usb_port_id))
 
-def convert_numpy_to_rgba_and_width_align_4(data):
-    """Converts the numpy data into RGBA.
+# def convert_numpy_to_rgba_and_width_align_4(data):
+#     """Converts the numpy data into RGBA.
 
-    720 input is 4 byte width aligned.
+#     720 input is 4 byte width aligned.
 
-    """
+#     """
 
-    height, width, channel = data.shape
+#     height, width, channel = data.shape
 
-    width_aligned = 4 * math.ceil(width / 4.0)
-    aligned_data = np.zeros((height, width_aligned, 4), dtype=np.int8)
-    aligned_data[:height, :width, :channel] = data
-    aligned_data = aligned_data.flatten()
+#     width_aligned = 4 * math.ceil(width / 4.0)
+#     aligned_data = np.zeros((height, width_aligned, 4), dtype=np.int8)
+#     aligned_data[:height, :width, :channel] = data
+#     aligned_data = aligned_data.flatten()
 
-    return aligned_data.tobytes()
+#     return aligned_data.tobytes()
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Edge Connect using KL720.')
@@ -118,17 +118,20 @@ if __name__ == '__main__':
         edge_grayimage = (edge_grayimage * 255).astype(np.int8)
         mask = mask.astype(np.int8)
         edge = (edge * 255).astype(np.int8)
+        
+        # input_data = np.zeros((imgh, imgw, 4), dtype=np.uint8)
+        # input_data[:, :, 0] = edge_grayimage
+        # input_data[:, :, 1] = mask
+        # input_data[:, :, 2] = edge
 
         # 堆疊數據
         input_data = np.stack([edge_grayimage, mask, edge], axis=0)
-
-        # 確保形狀正確
-        input_data = input_data.reshape(1, 3, imgh, imgw)
+        input_data = np.expand_dims(input_data, axis=0)
 
         print(f'Input Data Shape: {input_data.shape}, dtype: {input_data.dtype}')
         
-        # 轉換為字節流
         img_buffer = input_data.tobytes()
+        # img_buffer = convert_numpy_to_rgba_and_width_align_4(input_data)
 
         print(' - Preprocessing for Edge Model completed')
     except Exception as e:
@@ -147,7 +150,7 @@ if __name__ == '__main__':
         )
 
         # Debugging: Print the inference descriptor details
-        print(f'Inference Descriptor: {inference_descriptor}')
+        # print(f'Inference Descriptor: {inference_descriptor}')
     except kp.ApiKPException as exception:
             print(f'Error: Edge model inference failed, error = \'{exception}\'.')
             exit(0)
@@ -159,7 +162,7 @@ if __name__ == '__main__':
     for i in range(LOOP_TIME):
         try:
             kp.inference.generic_data_inference_send(device_group=device_group,
-                                                     generic_inference_input_descriptor=inference_descriptor)
+                                                    generic_inference_input_descriptor=inference_descriptor)
 
             generic_raw_result = kp.inference.generic_data_inference_receive(device_group=device_group)
         except kp.ApiKPException as exception:

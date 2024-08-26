@@ -1,0 +1,12 @@
+Total [2] models:
+[input]
+    id: [32769], version: [0x8b28]
+    size: input [0x40000], output [0x30000], buf [0x1000000], cmd [0x1f8ec], weight [0x1c73680], fw_code [0xd558]
+    addr: input [0x80220000], output [0x80260000], buf [0x802c0000], cmd [0x812c0000], weight [0x812df8f0], fw_code [0x82f52f70]
+[input]
+    id: [32770], version: [0x8b28]
+    size: input [0x40000], output [0x30000], buf [0x1000000], cmd [0x1f8ec], weight [0x1c73680], fw_code [0xd558]
+    addr: input [0x80220000], output [0x80290000], buf [0x802c0000], cmd [0x82f604d0], weight [0x82f7fdc0], fw_code [0x84bf3440]
+dram_addr_end [0x84c00998], total bin size: [0x3940998]
+checksum: all_models.bin [0xebf28c41]
+	0 [0x44870913],	1 [0x85748d1b],

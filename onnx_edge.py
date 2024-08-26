@@ -26,22 +26,18 @@ def datasetpreprocessor(IMAGE_FILE_PATH, MASK_FILE_PATH):
     tmp_mask = (1-mask/255).astype(bool)
     edge = canny(edge_grayimage, sigma=0, mask=tmp_mask).astype(float)
 
-    edge_grayimage_tensor = torch.from_numpy(edge_grayimage).float().unsqueeze(0).unsqueeze(0)
-    mask_tensor = torch.from_numpy(mask).float().unsqueeze(0).unsqueeze(0)
-    edge_tensor = torch.from_numpy(edge).float().unsqueeze(0).unsqueeze(0)
+    # 將數據轉換為 int8 格式
+    edge_grayimage = (edge_grayimage * 255).astype(np.int8)
+    mask = mask.astype(np.int8)
+    edge = (edge * 255).astype(np.int8)
 
-    # 確保值在 0-1 範圍內
-    edge_grayimage_tensor = edge_grayimage_tensor / 255.0
-    mask_tensor = mask_tensor / 255.0
-    
-    edge_tensor = edge_tensor / 255.0  # 如果 edge 不是 0-255 範圍，這行可能不需要
-    # 連接張量
-    input_tensor = torch.cat([edge_grayimage_tensor, mask_tensor, edge_tensor], dim=1)
+    # 堆疊數據
+    input_data = np.stack([edge_grayimage, mask, edge], axis=0)
+    input_data = np.expand_dims(input_data, axis=0)
 
-    # 檢查形狀
-    print(input_tensor.shape)  # 應該輸出 torch.Size([1, 3, 256, 256])
+    print(f'Input Data Shape: {input_data.shape}, dtype: {input_data.dtype}')
     
-    return input_tensor
+    return input_data
 
 def preprocess_edge_model_folder(image_folder, mask_folder):
         """

@@ -1,0 +1,20 @@
+{
+    "docker_version": "kneron/toolchain:v0.25.1",
+    "comments": "",
+    "kdp720/input bitwidth": "int8",
+    "kdp720/output bitwidth": "int8",
+    "kdp720/cpu bitwidth": "int8",
+    "kdp720/datapath bitwidth": "int8",
+    "kdp720/weight bitwidth": "int8",
+    "kdp720/ip_eval/fps": "2.66541",
+    "kdp720/ip_eval/ITC(ms)": "375.176 ms",
+    "kdp720/ip_eval/C(GOPs)": "4.44229e+10",
+    "kdp720/ip_eval/RV(mb)": 97.79,
+    "kdp720/ip_eval/WV(mb)": 55.7711,
+    "kdp720/ip_eval/cpu_node": "InstanceNormalization: /decoder/decoder.1/InstanceNormalization, /decoder/decoder.4/InstanceNormalization, /encoder/encoder.2/InstanceNormalization, /encoder/encoder.5/InstanceNormalization, /encoder/encoder.8/InstanceNormalization, /middle/middle.0/conv_block/conv_block.2/InstanceNormalization, /middle/middle.0/conv_block/conv_block.6/InstanceNormalization, /middle/middle.1/conv_block/conv_block.2/InstanceNormalization, /middle/middle.1/conv_block/conv_block.6/InstanceNormalization, /middle/middle.2/conv_block/conv_block.2/InstanceNormalization, /middle/middle.2/conv_block/conv_block.6/InstanceNormalization, /middle/middle.3/conv_block/conv_block.2/InstanceNormalization, /middle/middle.3/conv_block/conv_block.6/InstanceNormalization, /middle/middle.4/conv_block/conv_block.2/InstanceNormalization, /middle/middle.4/conv_block/conv_block.6/InstanceNormalization, /middle/middle.5/conv_block/conv_block.2/InstanceNormalization, /middle/middle.5/conv_block/conv_block.6/InstanceNormalization, /middle/middle.6/conv_block/conv_block.2/InstanceNormalization, /middle/middle.6/conv_block/conv_block.6/InstanceNormalization, /middle/middle.7/conv_block/conv_block.2/InstanceNormalization, /middle/middle.7/conv_block/conv_block.6/InstanceNormalization",
+    "kdp720/bie": "input.kdp720.scaled.bie",
+    "kdp720/onnx": "input.kdp720.decomposed.onnx",
+    "kdp720/nef": "models_720.nef",
+    "gen fx model report": "model_fx_report.html",
+    "gen fx model json": "model_fx_report.json"
+}
